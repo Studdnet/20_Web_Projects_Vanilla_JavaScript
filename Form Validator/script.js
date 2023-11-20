@@ -25,33 +25,63 @@ function isValidEmail(email) {
   return re.test(String(email).toLocaleLowerCase());
 }
 
+//Check required fields
+function checkRequired(inputArr) {
+  inputArr.forEach(function (input) {
+    if (input.value.trim() === "") {
+      showError(input, `${getFieldName(input)} is required`);
+    } else {
+      showSuccess(input);
+    }
+  });
+}
+
+// Check email
+function checkEmail(inputEmail) {
+  if (inputEmail.value.trim() === "") {
+    showError(inputEmail, `${getFieldName(inputEmail)} is required`);
+  } else if (!isValidEmail(inputEmail.value)) {
+    showError(inputEmail, `${getFieldName(inputEmail)} is not correct`);
+  } else {
+    showSuccess(inputEmail);
+  }
+}
+
+//Get field name
+function getFieldName(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
 //Event listeners
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  if (username.value === "") {
-    showError(username, "Your username is not correct");
-  } else {
-    showSuccess(username);
-  }
+  checkRequired([username, password, password2]);
+  checkEmail(email);
 
-  if (email.value === "") {
-    showError(email, "Your email is not correct");
-  } else if (!isValidEmail(email.value)) {
-    showError(email, "Your email is not valid");
-  } else {
-    showSuccess(email);
-  }
+  //   if (username.value === "") {
+  //     showError(username, "Your username is not correct");
+  //   } else {
+  //     showSuccess(username);
+  //   }
 
-  if (password.value === "") {
-    showError(password, "Your password is not correct");
-  } else {
-    showSuccess(password);
-  }
+  //   if (email.value === "") {
+  //     showError(email, "Your email is not correct");
+  //   } else if (!isValidEmail(email.value)) {
+  //     showError(email, "Your email is not valid");
+  //   } else {
+  //     showSuccess(email);
+  //   }
 
-  if (password2.value === "") {
-    showError(password2, "Your password is not correct");
-  } else {
-    showSuccess(password2);
-  }
+  //   if (password.value === "") {
+  //     showError(password, "Your password is not correct");
+  //   } else {
+  //     showSuccess(password);
+  //   }
+
+  //   if (password2.value === "") {
+  //     showError(password2, "Your password is not correct");
+  //   } else {
+  //     showSuccess(password2);
+  //   }
 });
